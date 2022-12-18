@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, abort
+from flask import Blueprint, render_template, request, abort, jsonify
 from .dao.posts_dao import PostDAO
 
 posts_blueprint = Blueprint('posts_blueprint', __name__, template_folder='templates')
@@ -35,6 +35,18 @@ def search_page():
     query = request.args.get('s')
     posts = post_dao.search_for_posts(query)
     return render_template('search.html', posts=posts, posts_amount=len(posts), query=query)
+
+
+@posts_blueprint.route('/api/posts')
+def get_api_posts():
+    posts = post_dao.get_all_posts()
+    return jsonify(posts)
+
+
+@posts_blueprint.route('/api/posts/<int:post_id>')
+def get_api_post(post_id):
+    posts = post_dao.get_post_by_pk(post_id)
+    return jsonify(posts)
 
 
 @posts_blueprint.errorhandler(404)
