@@ -17,7 +17,7 @@
         </svg>
       </a>
       <a href="/bookmarks.html" class="header__bookmark-btn">
-        <img src="../posts/static/img/bookmark.png" alt="" class="header__bookmark-icon" width="28">
+        <img src="../static/img/bookmark.png" alt="" class="header__bookmark-icon" width="28">
         <span class="header__bookmark-counter">3</span>
       </a>
     </div>
@@ -26,8 +26,8 @@
   <main class="container">
 
     <div class="search">
-      <form action="/search" class="search__form">
-        <input type="search" class="search__input">
+      <form action="/search/" class="search__form">
+        <input type="search" class="search__input" name="s">
       </form>
     </div>
 
@@ -36,7 +36,7 @@
       {%for post in posts%}
       <div class="items__item item">
         <div class="item__top">
-          <a href="/posts/{{post['pk']}}" class="item__head">
+          <a href="/users/{{post['poster_name']}}" class="item__head">
             <div class="item__ava-wrap">
               <img src="{{post['poster_avatar']}}" alt="" class="item__ava" width="47">
             </div>
