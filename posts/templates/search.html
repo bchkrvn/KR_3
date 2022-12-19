@@ -45,7 +45,7 @@
         <a href="/posts/{{post['pk']}}" class="item__post-link">
           <img src="{{post['pic']}}" alt="" width="348" class="item__post-img">
         </a>
-        <p class="item__descr">{{post['content'][:50]}}...</p>
+        <p class="item__descr">{{post['content'][:50]|safe}}...</p>
         <div class="item__post-info">
           <div class="item__counter">
             <img src="../static/img/eye.png" alt="" class="item__counter-icon" width="26">
@@ -54,9 +54,11 @@
         </div>
         <div class="item__post-bottom">
           <a href="/posts/{{post['pk']}}" class="item__btn-more">Подробнее</a>
-          <button type="button" class="item__bookmark-btn">
+          <form action="/bookmarks/{{post['pk']}}">
+          <button type="submit" class="item__bookmark-btn">
             <img src="../static/img/bookmark.png" alt="" class="item__bookmark-icon" width="24">
           </button>
+          </form>
         </div>
       </div>
       {%endfor%}
