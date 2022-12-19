@@ -7,8 +7,11 @@ post_dao = PostDAO('data/posts.json')
 
 @posts_blueprint.route('/')
 def main_page():
-    posts = post_dao.get_all_posts()
-    return render_template('index.html', posts=posts)
+    try:
+        posts = post_dao.get_all_posts()
+        return render_template('index.html', posts=posts)
+    except FileNotFoundError:
+        abort(500)
 
 
 @posts_blueprint.route('/posts/<int:post_id>')
@@ -19,6 +22,8 @@ def post_id_page(post_id):
         return render_template('post.html', post=post, comments=comments, amount_comments=len(comments))
     except ValueError:
         abort(404)
+    except FileNotFoundError:
+        abort(500)
 
 
 @posts_blueprint.route('/users/<user_name>')
@@ -28,13 +33,18 @@ def user_page(user_name):
         return render_template('user-feed.html', posts=user_posts)
     except ValueError:
         abort(404)
+    except FileNotFoundError:
+        abort(500)
 
 
 @posts_blueprint.route('/search/')
 def search_page():
-    query = request.args.get('s')
-    posts = post_dao.search_for_posts(query)
-    return render_template('search.html', posts=posts, posts_amount=len(posts), query=query)
+    try:
+        query = request.args.get('s')
+        posts = post_dao.search_for_posts(query)
+        return render_template('search.html', posts=posts, posts_amount=len(posts), query=query)
+    except FileNotFoundError:
+        abort(500)
 
 
 @posts_blueprint.route('/api/posts')
