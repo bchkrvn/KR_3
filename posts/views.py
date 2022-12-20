@@ -2,7 +2,6 @@ import logging
 from flask import Blueprint, render_template, request, abort, jsonify, redirect
 from .dao.posts_dao import PostDAO
 
-
 posts_blueprint = Blueprint('posts_blueprint', __name__, template_folder='templates')
 post_dao = PostDAO('data/posts.json')
 
@@ -146,4 +145,3 @@ def server_error(e):
     Обработчик ошибок 500
     """
     return render_template('500.html'), 500
-
